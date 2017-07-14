@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import './index.css';
 
 class Search extends Component {
@@ -34,9 +34,9 @@ class Search extends Component {
     }
 }
 
-Search.propTypes = {
-    value: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired,
-}
+// Search.propTypes = {
+//     value: PropTypes.string.isRequired,
+//     children: PropTypes.string.isRequired,
+// }
 
 export default Search;
