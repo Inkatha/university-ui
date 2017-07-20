@@ -1,0 +1,18 @@
+.table-container {
+    margin-left: 0;
+    text-align: center;
+}
+
+.school-name-button {
+    width: 15%;
+    height: auto;
+    background-color: lightblue;
+}
+
+.school-name-button:hover {
+    cursor: pointer;
+}
+
+.school-name {
+    color: black;
+}

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import Search from '../Search'
+import Search from '../Search';
+import Table from '../Table';
 import './index.css';
 
 import {
   DEFAULT_QUERY,
-  SEARCH_PATH_BASE
+  API_BASE_PATH,
+  BASIC_INFO,
+  SEARCH
 } from '../../constants'
 
 class App extends Component {
@@ -13,12 +16,16 @@ class App extends Component {
     super(props);
 
     this.state = {
-      results: null,
+      searchResults: [],
+      basicInfo: [],
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
     }
 
-    this.fetchSchoolData = this.fetchSchoolData.bind(this);
+    this.searchSchoolData = this.searchSchoolData.bind(this);
+    this.setBasicInfo = this.setBasicInfo.bind(this);
+    this.fetchSchoolBasicInfoById = this.fetchSchoolBasicInfoById.bind(this);
+
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
   }
@@ -26,15 +33,23 @@ class App extends Component {
   componentDidMount() {
     const { searchTerm } = this.state;
     this.setState({ searchKey: searchTerm })
-    this.fetchSchoolData(searchTerm);
+    this.searchSchoolData(searchTerm);
   }
 
-  fetchSchoolData(searchTerm) {
-    const url = `${SEARCH_PATH_BASE}${searchTerm}`;
+  searchSchoolData(searchTerm) {
+    const url = `${API_BASE_PATH}${BASIC_INFO}${SEARCH}${searchTerm}`;
 
     fetch(url)
       .then(response => response.json())
-      .then(result => this.setSchoolData(result));
+      .then(result => this.setSearchResults(result));
+  }
+
+  fetchSchoolBasicInfoById(unitId) {
+    const url = `${API_BASE_PATH}${BASIC_INFO}${unitId}`
+
+    fetch(url)
+      .then(response => response.json())
+      .then(result => this.setBasicInfo(result))
   }
 
   onSearchChange(event) {
@@ -45,21 +60,26 @@ class App extends Component {
     const { searchTerm } = this.state;
     this.setState({ searchKey: searchTerm });
     
-    this.fetchSchoolData(searchTerm);
+    this.searchSchoolData(searchTerm);
 
     event.preventDefault();
   }
 
-  setSchoolData(result) {
-    this.setState({ results: result });
+  setSearchResults(result) {
+    this.setState({ searchResults: result });
+  }
+
+  setBasicInfo(result) {
+    console.log(result);
+    this.setState({ basicInfo: result});
   }
 
   render() {
 
-    const { results, searchTerm } = this.state;
+    const { searchResults, searchTerm } = this.state;
 
     return (
-      <div>
+      <div className="App-container">
         <Search
           value={searchTerm}
           onChange={this.onSearchChange}
@@ -68,7 +88,11 @@ class App extends Component {
           Search
         </Search>
 
-        { results ? <h1>{results[0].instnm}</h1> : <h1>School Name Here</h1> }
+        <Table
+          searchResults={searchResults}
+          fetchBasicInfo={this.fetchSchoolBasicInfoById}
+        >
+        </Table>        
 
       </div> 
     );

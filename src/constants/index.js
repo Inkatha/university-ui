@@ -1,2 +1,5 @@
 export const DEFAULT_QUERY = 'Aurora University';
-export const SEARCH_PATH_BASE = 'http://www.universityinfo.net/api/basicinfo/search/'
+export const API_BASE_PATH = 'http://www.universityinfo.net/api'
+
+export const BASIC_INFO = '/basicinfo/'
+export const SEARCH = 'search/'
