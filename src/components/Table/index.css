@@ -4,15 +4,22 @@
 }
 
 .school-name-button {
-    width: 15%;
+    width: 35%;
     height: auto;
     background-color: lightblue;
+    border: none;
+    border-radius: 5px;    
 }
 
 .school-name-button:hover {
     cursor: pointer;
 }
 
+.school-name-button:focus {
+    outline: 0;
+}
+
 .school-name {
     color: black;
+    font-size: 15px;
 }

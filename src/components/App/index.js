@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from '../Search';
 import Table from '../Table';
+import School from '../School';
 import './index.css';
 
 import {
@@ -17,13 +18,12 @@ class App extends Component {
 
     this.state = {
       searchResults: [],
-      basicInfo: [],
+      basicInfoResult: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
     }
 
     this.searchSchoolData = this.searchSchoolData.bind(this);
-    this.setBasicInfo = this.setBasicInfo.bind(this);
     this.fetchSchoolBasicInfoById = this.fetchSchoolBasicInfoById.bind(this);
 
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -32,8 +32,19 @@ class App extends Component {
 
   componentDidMount() {
     const { searchTerm } = this.state;
-    this.setState({ searchKey: searchTerm })
+    this.setState({ searchKey: searchTerm });
     this.searchSchoolData(searchTerm);
+  }
+
+  onSearchSubmit(event) {
+    const { searchTerm } = this.state;
+
+    this.setState({ searchKey: searchTerm });
+    this.setState({ basicInfoResult: null });
+    
+    this.searchSchoolData(searchTerm);
+
+    event.preventDefault();
   }
 
   searchSchoolData(searchTerm) {
@@ -44,56 +55,70 @@ class App extends Component {
       .then(result => this.setSearchResults(result));
   }
 
+  setSearchResults(result) {
+    this.setState((prevState, props) => ({ 
+      searchResults: result 
+    }));
+  }
+
   fetchSchoolBasicInfoById(unitId) {
     const url = `${API_BASE_PATH}${BASIC_INFO}${unitId}`
 
     fetch(url)
       .then(response => response.json())
-      .then(result => this.setBasicInfo(result))
-  }
-
-  onSearchChange(event) {
-    this.setState({ searchTerm: event.target.value });
-  }
-
-  onSearchSubmit(event) {
-    const { searchTerm } = this.state;
-    this.setState({ searchKey: searchTerm });
-    
-    this.searchSchoolData(searchTerm);
-
-    event.preventDefault();
-  }
-
-  setSearchResults(result) {
-    this.setState({ searchResults: result });
+      .then(result => this.setBasicInfo(result));
   }
 
   setBasicInfo(result) {
-    console.log(result);
-    this.setState({ basicInfo: result});
+    this.setState((prevState, props) => ({
+      basicInfoResult: result
+    }));
+  }
+
+  onSearchChange(event) {
+    this.setState((prevState, props) => ({
+      searchTerm: event.target.value
+    }));
   }
 
   render() {
 
-    const { searchResults, searchTerm } = this.state;
+    const { 
+      searchResults, 
+      searchTerm, 
+      basicInfoResult
+    } = this.state;
 
     return (
-      <div className="App-container">
-        <Search
-          value={searchTerm}
-          onChange={this.onSearchChange}
-          onSubmit={this.onSearchSubmit}
-        >
-          Search
-        </Search>
+      <div>
+        { basicInfoResult
+          ?
+          <div className="school-container">
+            <School
+              searchValue={searchTerm}
+              onSearchChange={this.onSearchChange}
+              onSearchSubmit={this.onSearchSubmit}
+              basicInfoResult={basicInfoResult}
+            >
+            </School>
+          </div>
+          :
+          <div className="search-container">
+            <Search
+              value={searchTerm}
+              onChange={this.onSearchChange}
+              onSubmit={this.onSearchSubmit}
+            >
+              Search
+            </Search>
 
-        <Table
-          searchResults={searchResults}
-          fetchBasicInfo={this.fetchSchoolBasicInfoById}
-        >
-        </Table>        
-
+            <Table
+              searchResults={searchResults}
+              fetchBasicInfo={this.fetchSchoolBasicInfoById}
+            >
+            </Table> 
+          </div>
+        }
       </div> 
     );
   }

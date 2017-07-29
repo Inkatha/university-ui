@@ -8,7 +8,7 @@ class Table extends Component {
       searchResults,
       fetchBasicInfo
     } = this.props;
-
+    
     return (
       <div className="table-container">
         { searchResults 
