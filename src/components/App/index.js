@@ -76,9 +76,7 @@ class App extends Component {
   }
 
   onSearchChange(event) {
-    this.setState((prevState, props) => ({
-      searchTerm: event.target.value
-    }));
+    this.setState({ searchTerm: event.target.value });
   }
 
   render() {
