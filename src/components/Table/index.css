@@ -1,10 +1,12 @@
 .table-container {
-    margin-left: 0;
+    margin: 10px 20px;
     text-align: center;
 }
 
 .school-name-button {
-    width: 35%;
+    padding: 8px 10px;
+    font-weight: normal;
+    overflow: hidden;
 }
 
 .school-name-button:hover {
