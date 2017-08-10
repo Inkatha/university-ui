@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import Search from '../Search';
 import Table from '../Table';
 import School from '../School';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import './index.css';
 
 import {
@@ -88,36 +93,36 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div>
-        { basicInfoResult
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+          { basicInfoResult
           ?
-          <div className="school-container">
-            <School
-              searchValue={searchTerm}
-              onSearchChange={this.onSearchChange}
-              onSearchSubmit={this.onSearchSubmit}
-              basicInfoResult={basicInfoResult}
-            >
-            </School>
-          </div>
-          :
-          <div className="search-container">
-            <Search
-              value={searchTerm}
-              onChange={this.onSearchChange}
-              onSubmit={this.onSearchSubmit}
-            >
-              Search
-            </Search>
+            <div className="school-container">
+              <School
+                searchValue={searchTerm}
+                onSearchChange={this.onSearchChange}
+                onSearchSubmit={this.onSearchSubmit}
+                basicInfoResult={basicInfoResult}
+              >
+              </School>
+            </div>
+            :
+            <div className="search-container">
+              <Search
+                value={searchTerm}
+                onChange={this.onSearchChange}
+                onSubmit={this.onSearchSubmit}
+              >
+                Search
+              </Search>
 
-            <Table
-              searchResults={searchResults}
-              fetchBasicInfo={this.fetchSchoolBasicInfoById}
-            >
-            </Table> 
-          </div>
-        }
-      </div> 
+              <Table
+                searchResults={searchResults}
+                fetchBasicInfo={this.fetchSchoolBasicInfoById}
+              >
+              </Table> 
+            </div>
+          }
+        </MuiThemeProvider>
     );
   }
 }

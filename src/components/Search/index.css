@@ -3,24 +3,8 @@
 }
 
 .search-text-box {
-    margin-top: 10px;
-    margin-right: 5px;
-    width: 25%;
     text-align: center;
-    height: 20px;
-    border-radius: 5px;
-    border: 1px solid lightblue;
-}
-
-.search-button {
-    height: 30px;
-    border-radius: 7px;
-    background-color: white;
-    border: 1px solid lightblue;
-}
-
-button:focus {
-    outline: 0;
+    margin-right: 10px;
 }
 
 input:focus {

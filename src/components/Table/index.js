@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 import './index.css'
 
 class Table extends Component {
@@ -16,11 +17,11 @@ class Table extends Component {
           searchResults.map(school => 
             <div key={school.unitid}>
               <h1>
-                <button 
+                <RaisedButton 
                   onClick={() => fetchBasicInfo(school.unitid)}
                   className="school-name-button">
                   <span className="school-name">{school.instnm}</span>
-                </button>
+                </RaisedButton>
               </h1> 
             </div>
           )
