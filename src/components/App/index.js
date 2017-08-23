@@ -111,15 +111,12 @@ class App extends Component {
                 value={searchTerm}
                 onChange={this.onSearchChange}
                 onSubmit={this.onSearchSubmit}
-              >
-                Search
-              </Search>
+              />
 
               <Table
                 searchResults={searchResults}
                 fetchBasicInfo={this.fetchSchoolBasicInfoById}
-              >
-              </Table> 
+              />
             </div>
           }
         </MuiThemeProvider>

@@ -16,7 +16,6 @@ class Search extends Component {
         value,
         onChange,
         onSubmit,
-        children,
       } = this.props;
 
       return (
@@ -31,8 +30,11 @@ class Search extends Component {
               this.input = node;
             }} 
           />
-            <RaisedButton className="search-button" type="submit">
-              {children}
+            <RaisedButton 
+              className="search-button" 
+              label="Search"
+              primary={true}
+              type="submit">
             </RaisedButton>
         </form>
       );
